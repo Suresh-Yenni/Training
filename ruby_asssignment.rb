@@ -1,108 +1,106 @@
 students = [{ 'id' => 1, 'department' => 'a1', 'maths' => 43, 'physics' => 54, 'chemistry' => 65, 'year' => 2016 },
-{ 'id' => 2, 'department' => 'a1', 'maths' => 66, 'physics' => 52, 'chemistry' => 65, 'year' => 2016 },
-{ 'id' => 3, 'department' => 'a7', 'maths' => 87, 'physics' => 32, 'chemistry' => 43, 'year' => 2016 },
-{ 'id' => 1, 'department' => 'a1', 'maths' => 21, 'physics' => 52, 'chemistry' => 65, 'year' => 2015 },
-{ 'id' => 2, 'department' => 'a1', 'maths' => 68, 'physics' => 50, 'chemistry' => 65, 'year' => 2015 },
-{ 'id' => 3, 'department' => 'a7', 'maths' => 85, 'physics' => 22, 'chemistry' => 43, 'year' => 2015 },
-{ 'id' => 4, 'department' => 'a7', 'maths' => 21, 'physics' => 22, 'chemistry' => 13, 'year' => 2016 }]
+            { 'id' => 2, 'department' => 'a1', 'maths' => 66, 'physics' => 52, 'chemistry' => 65, 'year' => 2016 },
+            { 'id' => 3, 'department' => 'a7', 'maths' => 87, 'physics' => 32, 'chemistry' => 43, 'year' => 2016 },
+            { 'id' => 1, 'department' => 'a1', 'maths' => 21, 'physics' => 52, 'chemistry' => 65, 'year' => 2015 },
+            { 'id' => 2, 'department' => 'a1', 'maths' => 68, 'physics' => 50, 'chemistry' => 65, 'year' => 2015 },
+            { 'id' => 3, 'department' => 'a7', 'maths' => 85, 'physics' => 22, 'chemistry' => 43, 'year' => 2015 },
+            { 'id' => 4, 'department' => 'a7', 'maths' => 21, 'physics' => 22, 'chemistry' => 13, 'year' => 2016 }]
 
-COMPARE_KEYS_MARKS = ['maths', 'physics', 'chemistry']
+COMPARE_KEYS_MARKS = %w(maths physics chemistry).freeze
 
 puts 'GROUP BY: id/department/year'
-input_group_by = gets.chomp.downcase until (!input_group_by.to_s.strip.empty?) && (['id', 'department', 'year'].include? input_group_by) 
+input_group_by = gets.chomp.downcase until !input_group_by.to_s.strip.empty? && (%w(id department year).include? input_group_by)
 
 puts 'SORT BY: maths/physics/chemistry'
-input_sort_by =  gets.chomp.downcase until !input_sort_by.to_s.strip.empty? && (['maths', 'physics', 'chemistry'].include? input_sort_by) 
+input_sort_by = gets.chomp.downcase until !input_sort_by.to_s.strip.empty? && (%w(maths physics chemistry).include? input_sort_by)
 
 puts 'Display: maths, physics, chemistry'
-input_display = gets.chomp.gsub!(/\s+/, '').downcase  until !input_display.to_s.strip.empty?
+input_display = gets.chomp.gsub!(/\s+/, '').downcase while input_display.to_s.strip.empty?
 
 puts 'Year1'
-year_1 = gets.chomp until !year_1.to_s.strip.empty?
+year_1 = gets.chomp while year_1.to_s.strip.empty?
 
 puts 'Year2'
-year_2 = gets.chomp until !year_2.to_s.strip.empty?
+year_2 = gets.chomp while year_2.to_s.strip.empty?
 
 puts 'Should compare? true/false'
-should_compare = gets.chomp.downcase until !should_compare.to_s.strip.empty?
+should_compare = gets.chomp.downcase while should_compare.to_s.strip.empty?
 
 puts 'Should total? true/false'
-should_total = gets.chomp.downcase until !should_total.to_s.strip.empty?
+should_total = gets.chomp.downcase while should_total.to_s.strip.empty?
 
-input_display_arr = input_display.split(",")
+input_display_arr = input_display.split(',')
 
 def group_by_input_value(student_arr, group_by_value)
-	student_arr.group_by { |student| student[group_by_value] }
+  student_arr.group_by { |student| student[group_by_value] }
 end
 
 def sort_by_input_value(student_arr, sort_by_subject)
-	student_arr.each do |key,value|
-		student_arr[key] = value.sort_by{ |subject| subject[sort_by_subject]} 
-	end
+  student_arr.each do |key, value|
+    student_arr[key] = value.sort_by { |subject| subject[sort_by_subject] }
+  end
 end
 
 input_display_arr.insert(0, 'id') if input_display_arr.first != 'id'
-input_display_arr.push(input_group_by) if !input_display_arr.include? input_group_by
-input_display_arr.push('year') if !input_display_arr.include? 'year'
+input_display_arr.push(input_group_by) unless input_display_arr.include? input_group_by
+input_display_arr.push('year') unless input_display_arr.include? 'year'
 
 student_group_values = group_by_input_value(students, input_group_by)
 # puts student_group_values
 
 def total_marks(subject, display_array)
-	print "Total\t\t"
+  print "Total\t\t"
 
-	display_array.each do |subject_name|
-		total = 0
-		if COMPARE_KEYS_MARKS.include? subject_name
-			subject.collect do |subject|
-				total = total + subject[subject_name]
-			end
-			print "#{total}\t\t"
-		end
-	end
-	print "\n"
+  display_array.each do |subject_name|
+    total = 0
+    next unless COMPARE_KEYS_MARKS.include? subject_name
+    subject.collect do |subject|
+      total += subject[subject_name]
+    end
+    print "#{total}\t\t"
+  end
+  print "\n"
 end
 
 def change_marks(subject, display_array, year_1, year_2)
-	compare_year_1 = nil
-	compare_year_2 = nil
+  compare_year_1 = nil
+  compare_year_2 = nil
 
-	subject.each do |student|
-		compare_year_1 = student if student['year']  == year_1.to_i && !student.nil?
-		compare_year_2 = student if student['year'] == year_2.to_i && !student.nil?
-	end
+  subject.each do |student|
+    compare_year_1 = student if student['year'] == year_1.to_i && !student.nil?
+    compare_year_2 = student if student['year'] == year_2.to_i && !student.nil?
+  end
 
-	print "Change\t\t"
-	display_array.each do |subject_name|
-		changed_marks = 0
-		if !compare_year_1.nil?
-			changed_marks = (changed_marks - compare_year_1[subject_name]).abs
-		end
-		if !compare_year_2.nil?
-			changed_marks = (changed_marks - compare_year_2[subject_name]).abs 
-		end
-		print "#{changed_marks}\t\t" if COMPARE_KEYS_MARKS.include? subject_name
-	end
-	print "\n"
+  print "Change\t\t"
+  display_array.each do |subject_name|
+    changed_marks = 0
+    unless compare_year_1.nil?
+      changed_marks = (changed_marks - compare_year_1[subject_name]).abs
+    end
+    unless compare_year_2.nil?
+      changed_marks = (changed_marks - compare_year_2[subject_name]).abs
+    end
+    print "#{changed_marks}\t\t" if COMPARE_KEYS_MARKS.include? subject_name
+  end
+  print "\n"
 end
 
 def show_sorted_values(year_1, year_2, student_arr, compare, total, display_array, input_group_by)
-	student_arr.each do |_key, value|
-		value.each do |display, _fields|
-			display_array.each do |subject|
-				print "#{display[subject]}\t\t"
-			end
-			print "\n"
-		end
-		total_marks(value, display_array) if total == 'true'
-		change_marks(value, display_array, year_1, year_2) if compare == 'true' && input_group_by == 'id'
-	end
+  student_arr.each do |_key, value|
+    value.each do |display, _fields|
+      display_array.each do |subject|
+        print "#{display[subject]}\t\t"
+      end
+      print "\n"
+    end
+    total_marks(value, display_array) if total == 'true'
+    change_marks(value, display_array, year_1, year_2) if compare == 'true' && input_group_by == 'id'
+  end
 end
 
-input_display_arr.each { |header| print "#{header}\t\t" } 
+input_display_arr.each { |header| print "#{header}\t\t" }
 print "\n"
 
 student_sort_values = sort_by_input_value(student_group_values, input_sort_by)
-	
+
 show_sorted_values(year_1, year_2, student_sort_values, should_compare, should_total, input_display_arr, input_group_by)
-	
