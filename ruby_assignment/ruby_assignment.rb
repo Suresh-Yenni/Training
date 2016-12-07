@@ -20,13 +20,13 @@ end
 
 ## method does comparison of marks during the years passed in arugements
 ## and return array of row for each group in input array
-def compare_marks!(change_in_marks, input_array, years_to_compare, display_fields)
+def compare_marks!(change_in_marks, grouped_hash, years_to_compare, display_fields)
    first_year = 0
    second_year = 0
-   input_array.each do |grp_on, input_array_rows|
+   grouped_hash.each do |grp_on, array_rows|
      marks_row = {}
      display_fields.each do |key|
-       input_array_rows.each do |row|
+       array_rows.each do |row|
           if row["year"] == years_to_compare["first"]
                 first_year = row[key]
           elsif row["year"] == years_to_compare["second"]
@@ -41,12 +41,12 @@ end
 
 ## method totals the marks of all years if no comparison was asked or
 ## else totals the marks of years been passed and return array of row for each group in input aaray
-def get_totals!(total_marks, should_compare, input_array, years_to_compare, display_fields)
-   input_array.each do |grp_on, input_array_rows|
+def get_totals!(total_marks, should_compare, grouped_hash, years_to_compare, display_fields)
+   grouped_hash.each do |grp_on, array_rows|
      marks_row = {}
      display_fields.each do |key|
        total = 0
-       input_array_rows.each do |row|
+       array_rows.each do |row|
           if should_compare == "false"
              total = total + row[key]
           elsif (row["year"] == years_to_compare["first"]) || (row["year"] == years_to_compare["second"])
@@ -74,11 +74,11 @@ def display_row(compare_or_total, labels_key, change_or_total_marks, display_fie
 end
 
 ## method displayes required output on screen
-def display_output(input_array, change_in_marks, total_marks, display_fields,should_compare , should_total, group_on)
-  input_array.each do |grp_on,  input_array_rows|
+def display_output(grouped_hash, change_in_marks, total_marks, display_fields,should_compare , should_total, group_on)
+  grouped_hash.each do |grp_on,  array_rows|
      print "\nOn = #{grp_on}"
      display_fields.each { |label| print " | #{label} " }
-     input_array_rows.each do |row|
+     array_rows.each do |row|
        print "\n#{row["year"]}       "
        display_fields.each { |subject| print "#{row[subject]}    "}
      end
@@ -97,7 +97,7 @@ def start(input_array)
 
   display_fields = display_fields.split(",")
   sort_input!(input_array, sort_on)
-  input_array = group_input(input_array, group_on)
+  grouped_hash = group_input(input_array, group_on)
 
   years_to_compare = {"first" => "", "second" => ""}
 
@@ -106,15 +106,15 @@ def start(input_array)
       puts "First_compare_year? Second_compare_year? "
       years = gets.chomp
       years_to_compare["first"], years_to_compare["second"] = years.split(" ")
-      compare_marks!(change_in_marks, input_array, years_to_compare, display_fields)
+      compare_marks!(change_in_marks, grouped_hash, years_to_compare, display_fields)
   end
 
   if should_total == "true"
       total_marks = {}
-      get_totals!(total_marks, should_compare, input_array, years_to_compare, display_fields)
+      get_totals!(total_marks, should_compare, grouped_hash, years_to_compare, display_fields)
   end
 
-  display_output(input_array, change_in_marks, total_marks, display_fields, should_compare, should_total, group_on)
+  display_output(grouped_hash, change_in_marks, total_marks, display_fields, should_compare, should_total, group_on)
 
 end
 
