@@ -24,8 +24,8 @@ input_sort_by = gets.chomp.downcase until !input_sort_by.to_s.strip.empty? && (%
 
 puts 'Display: maths, physics, chemistry'
 while
-input_display_arr = gets.chomp.downcase.split(',').map(&:strip) 
-break if (check_display(input_display_arr))
+  input_display_arr = gets.chomp.downcase.split(',').map(&:strip)
+  break if (check_display(input_display_arr))
 end
 
 puts 'Year1'
@@ -41,8 +41,6 @@ should_compare = gets.chomp.downcase while should_compare.to_s.strip.empty?
 puts 'Should total? true/false'
 should_total = gets.chomp.downcase while should_total.to_s.strip.empty?
 
-# input_display_ar = input_display.split(',').map(&:strip)
-
 def group_by_input_value(students, group_by_value)
   students.group_by { |student| student[group_by_value] }
 end
@@ -56,9 +54,6 @@ end
 input_display_arr.insert(0, 'id') if input_display_arr.first != 'id'
 input_display_arr.push(input_group_by) unless input_display_arr.include? input_group_by
 input_display_arr.push('year') unless input_display_arr.include? 'year'
-
-student_group_values = group_by_input_value(students, input_group_by)
-# puts student_group_values
 
 def total_marks(subject, display_array)
   print "Total\t\t"
@@ -99,20 +94,22 @@ def change_marks(subject, display_array, year_1, year_2)
 end
 
 def show_sorted_values(year_1, year_2, students, compare, total, display_array, input_group_by)
-  students.each do |_key, value|
-    value.each do |display, fields|
+  students.keys.each do |value|
+    students[value].each do |display|
       display_array.each do |subject|
         print "#{display[subject]}\t\t"
       end
       print "\n"
     end
-    total_marks(value, display_array) if total == 'true'
-    change_marks(value, display_array, year_1, year_2) if compare == 'true' && input_group_by == 'id'
+    total_marks(students[value], display_array) if total == 'true'
+    change_marks(students[value], display_array, year_1, year_2) if compare == 'true' && input_group_by == 'id'    
   end
 end
 
 input_display_arr.each { |header| print "#{header}\t\t" }
 print "\n"
+
+student_group_values = group_by_input_value(students, input_group_by)
 
 student_sort_values = sort_by_input_value(student_group_values, input_sort_by)
 
