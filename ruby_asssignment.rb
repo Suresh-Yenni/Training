@@ -23,9 +23,8 @@ puts 'SORT BY: maths/physics/chemistry'
 input_sort_by = gets.chomp.downcase until !input_sort_by.to_s.strip.empty? && (%w(maths physics chemistry).include? input_sort_by)
 
 puts 'Display: maths, physics, chemistry'
-while
+until (check_display(input_display_arr))
   input_display_arr = gets.chomp.downcase.split(',').map(&:strip)
-  break if (check_display(input_display_arr))
 end
 
 puts 'Year1'
