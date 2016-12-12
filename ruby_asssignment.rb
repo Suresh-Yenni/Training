@@ -10,8 +10,8 @@ COMPARE_KEYS_MARKS = %w(maths physics chemistry).freeze
 
 def check_display(input_display)
   return false if input_display.empty?
-  input_display.each do |x|
-    return false if !COMPARE_KEYS_MARKS.include? x 
+  input_display.each do |display_name|
+    return false if !COMPARE_KEYS_MARKS.include? display_name 
   end
   true
 end
