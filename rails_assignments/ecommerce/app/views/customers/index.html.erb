@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <style>
+        .block{
+           background-color: orange;
+           box-shadow: 0px 0px 20px;
+           width:750px;
+           height: 550px;
+           text-align: center;
+           margin-left:22%;
+        }
+        .links{
+           color:#f1f1f1;
+           font-size:40px;
+           font-weight:bold;
+           text-decoration: none;
+        }
+        table {
+           border-collapse: collapse;
+           text-align: center;
+           margin-left:5%;
+        }
+        table, td, th {
+           border: 2px solid #0099ff;
+           padding: 4px;
+        }
+        .jump{
+           color:#f1f1f1;
+           font-weight:bold;
+           text-decoration: none;
+        }
+        .jump:hover
+        {
+           font-size:120%;
+        }
+    </style>
+    <h1 align="center" style="color: #0099ff;">All Available Customers</h1>
+  </head>
+  <body bgcolor="#f1f1f1">
+    <div class="block">
+      <% if !@customers.empty? %><br><br>
+        <table border="1">
+          <% @customers.each do |item| %>
+           <tr>
+               <td><%= item.name %></td>
+               <td><%= item.email %></td>
+               <td><%= item.city %></td>
+               <td><%= item.pincode %></td>
+               <td><%= link_to 'Edit Customer', edit_customer_path(item.id), {:class=>"jump"} %></td>
+               <td><%= link_to 'Delete Customer', customer_path(item.id), method: "delete", class: "jump"%></td>
+               <td><%= link_to 'Customer Orders', customer_path(item.id), {:class=>"jump"} %></td>
+           </tr>
+          <% end %>
+        </table>
+      <% else %>
+          <br><br><p>No Customers available</p>
+      <% end %>
+      <p>
+        <%= link_to "Home", orders_home_path ,{:class=>"links"}%>
+      </p>
+    </div>
+  </body>
+</html>

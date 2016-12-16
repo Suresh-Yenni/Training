@@ -1,0 +1,43 @@
+<style>
+  .block{
+       background-color: orange;
+       box-shadow: 0px 0px 20px;
+       width:700px;
+       height: 550px;
+       text-align: center;
+       margin-left:22%;
+  }
+  .links{
+       color:#f1f1f1;
+       font-size:40px;
+       font-weight:bold;
+       text-decoration: none;
+  }
+  .filling{
+       padding:3px;
+       width:250px;
+       height:25px;
+       font-size:25px;
+  }
+  .press{
+       padding:3px;
+       width:250px;
+       font-size:25px;
+       color:#0099ff;
+  }
+</style>
+<h1 align="center" style="color: #0099ff;">Adding New Item</h1>
+<body bgcolor="#f1f1f1">
+  <div class="block"><br><br>
+    <%= form_for :items, url: items_path do |f|%>
+      <p>
+          <%= f.text_field :item_name, placeholder: "Item Name", class: "filling", :required => true  %><br><br>
+          <%= f.number_field :price, placeholder: "Item Price", class: "filling", :required => true, :step=> 0.01 %><br><br>
+          <%= f.submit "Add Item" , class: "press"%>
+      </p>
+    <% end %>
+    <p>
+      <%= link_to "Home", orders_home_path,{:class=>"links"} %>
+    </p>
+  </div>
+</body>

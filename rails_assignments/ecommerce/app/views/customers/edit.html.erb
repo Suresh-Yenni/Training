@@ -1,0 +1,36 @@
+<style>
+    .block{
+        background-color: orange;
+        box-shadow: 0px 0px 20px;
+        width:700px;
+        height: 550px;
+        text-align: center;
+        margin-left:22%;
+    }
+    .filling{
+        padding:3px;
+        width:250px;
+        height:25px;
+        font-size:25px;
+    }
+    .press{
+        padding:3px;
+        width:250px;
+        font-size:25px;
+        color:#0099ff;
+    }
+</style>
+<h1 align="center" style="color: #0099ff;">Editing A Customer</h1>
+<body bgcolor="#f1f1f1">
+  <div class="block">
+    <%= form_for :customers, url: customer_path(@customers), method: "put" do |f|%>
+       <br><br><p>
+         <%= f.text_field :name, placeholder: "Customer Name", class: "filling", :required => true  %><br><br>
+         <%= f.email_field :email, placeholder: "Customer Email", class: "filling", :required => true %><br><br>
+         <%= f.text_field :city, placeholder: "Customer City", class: "filling", :required => true %><br><br>
+         <%= f.number_field :pincode, placeholder: "Customer Pin-code", class: "filling", :required => true %><br><br>
+         <%= f.submit "Submit Changes", class: "press" %>
+       </p>
+    <% end %>
+  </div>
+</body>

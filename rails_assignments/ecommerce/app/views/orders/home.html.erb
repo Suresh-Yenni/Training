@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <style>
+       .left_div{
+         float: left;
+         background-color: orange;
+         width:400px;
+         height:550px;
+         margin-left: 2%;
+         box-shadow: 0px 0px 10px black;
+        text-align:center;
+       }
+       .mid_div{
+         float: left;
+         background-color: #0099ff;
+         width:400px;
+         height:550px;
+         margin-left: 1%;
+         box-shadow: 0px 0px 20px black;
+        text-align:center;
+       }
+       .right_div{
+         float: right;
+         background-color: orange;
+         width:400px;
+         height:550px;
+         margin-right:2%;
+         box-shadow: 0px 0px 20px black;
+         text-align:center;
+       }
+       .links{
+         color:#f1f1f1;
+         font-size:40px;
+         font-weight:bold;
+         text-decoration: none;
+       }
+    </style>
+    <h1 align="center" style="color: #0099ff; font-size:40px;">Ecommerce Application</h1>
+  </head>
+  <body bgcolor="#f1f1f1">
+    <div class="block">
+      <p>
+        <div class="left_div"><br><br><br><br><br><br><br>
+          <%= link_to "Add Customer", new_customer_path, {:class=>"links"}%><br><br>
+          <%= link_to "View all Customers", customers_path, {:class=>"links"}%>
+        </div>
+        <div class="mid_div" ><br><br><br><br><br><br><br>
+          <%= link_to "Make Order", new_order_path, {:class=>"links"}%><br><br>
+          <%= link_to "View all orders", orders_path, {:class=>"links"}%>
+        </div>
+        <div class="right_div"><br><br><br><br><br><br><br>
+          <%= link_to "Add Item", new_item_path, {:class=>"links"} %><br><br>
+          <%= link_to "View all Items", items_path, {:class=>"links"}%>
+        </div>
+      </p>
+    </div>
+  </body>
+</html>

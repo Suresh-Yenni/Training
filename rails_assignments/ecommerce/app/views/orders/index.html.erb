@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <style>
+      .block{
+           background-color: #0099ff;
+           box-shadow: 0px 0px 20px;
+           width:700px;
+           height: 550px;
+           text-align: center;
+           margin-left:22%;
+      }
+      .links{
+           color:#f1f1f1;
+           font-size:40px;
+           font-weight:bold;
+           text-decoration: none;
+      }
+      table {
+           border-collapse: collapse;
+           text-align: center;
+           margin-left:5%;
+      }
+      table, td, th {
+           border: 2px solid orange;
+           padding: 4px;
+      }
+    </style>
+    <h1 align="center" style="color: #0099ff;">All Orders Available On Website</h1>
+  </head>
+  <body bgcolor="#f1f1f1">
+    <div class="block"><br><br>
+      <% if !@details.empty? %>
+        <table border='1'>
+          <% @details.each do |cust,itm| %>
+            <tr>
+               <td><%= cust %></td>
+               <td><%= itm %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <p>No orders available</p>
+      <% end %>
+      <p>
+        <%= link_to "Home", orders_home_path, {:class=>"links"}%>
+      </p>
+    </div>
+  </body>
+</html>

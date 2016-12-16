@@ -1,0 +1,60 @@
+<html>
+  <style>
+    .block{
+         background-color: orange;
+         box-shadow: 0px 0px 20px;
+         width:700px;
+         height: 550px;
+         text-align: center;
+         margin-left:22%;
+    }
+    .links{
+         color:#f1f1f1;
+         font-size:40px;
+         font-weight:bold;
+         text-decoration: none;
+    }
+    table {
+         border-collapse: collapse;
+         text-align: center;
+         margin-left:5%;
+    }
+    table, td, th {
+         border: 2px solid #0099ff;
+         padding: 4px;
+    }
+    .jump{
+         color:#f1f1f1;
+         font-weight:bold;
+         text-decoration: none;
+    }
+    .jump:hover
+    {
+      font-size:120%;
+    }
+  </style>
+  <head>
+    <h1 align="center" style="color: #0099ff;">All Available Items</h1>
+  </head>
+  <body bgcolor="#f1f1f1">
+    <div class="block"><br><br>
+      <% if !@items.empty? %>
+        <table>
+            <% @items.each do |item| %>
+               <tr>
+                 <td><%= item.item_name %></td>
+                 <td><%= item.price %></td>
+                 <td><%= link_to 'Edit Item', edit_item_path(item.id), {:class=>"jump"} %></td>
+                 <td><%= link_to 'Delete Item', item_path(item.id), method: "delete" , class: "jump"%></td>
+               </tr>
+            <% end %>
+        </table>
+      <% else %>
+        <p>No items available</p>
+      <% end %>
+      <p>
+        <%= link_to "Home", orders_home_path, {:class=>"links"} %>
+      </p>
+    </div>
+  </body>
+</html>
