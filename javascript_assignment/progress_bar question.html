@@ -1,0 +1,48 @@
+<html>
+	<head>
+	    <title>Progress Bar</title>
+	    <style>
+	       #outer{
+		        width: 400px;
+		        height: 30px;
+		        background-color: black;
+	       }
+	       #inner{
+		        width: 0%;
+		        height: 100%;
+		        background-color: grey;
+	       }
+	       #lable{
+		        text-align: center;
+		        color: white;
+		        line-height: 30px;
+	       }
+	    </style>
+	    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	    <script type="text/javascript">
+	        window.onload = function(){
+	            if (typeof(Worker) !== "undefined") {
+	            w = new Worker("progress_workers.js");
+	            w.onmessage = function(event){
+	            	$("#inner").width(event.data + "%");
+	            	$("#label").html(event.data + "%");
+	            	}
+	            }
+	        }
+	        var increment = (function(){
+	        	var count = 0;
+	        	return function(){ return count++;  }
+	        })();
+	        function change(){$("#box").val(increment())}
+	    </script>
+	</head>
+	<body>
+	    <p>
+		    <div id="outer" >
+	        	<div id="inner"><div id="label">0%</div></div>
+		    </div>
+	    </p>
+	    <input type="text" placeholder="Enter number" id="box" value=0 />
+	    <button onclick="change()">Action</button>
+	</body>
+</html>

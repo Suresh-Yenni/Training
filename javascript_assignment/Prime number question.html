@@ -1,0 +1,34 @@
+<html>
+	<head>
+	    <title>Prime Number</title>
+	    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	    <script type="text/javascript">
+	       function show_message(input, msg, results)
+	       {
+			    if (msg) results[input] = input + msg;
+			    $("#result").html(results[input]);
+			    $("#in").val("");
+	       }
+	       function is_prime(number)
+	       {
+		        if(number == 1) return "not";
+		        for(count = 2; count <= number/2; count++)
+		          if(number % count == 0) return "not";
+		        return "is";
+	       }
+	       function check_if_prime()
+	       {
+		        if(!arguments.callee.results) arguments.callee.results = new Object();
+		        var input = $("#in").val();
+		        var number = parseInt(input);
+		        if (input in arguments.callee.results) show_message(input, "", arguments.callee.results);
+		        else show_message(input, " " + is_prime(number) + " prime", arguments.callee.results);
+	       }
+	    </script>
+	</head>
+	<body>
+	    <input type="text" placeholder="Enter number" id="in" required/>
+	    <button onclick="check_if_prime()">Find</button>
+	    <p id="result" ></p>
+	</body>
+</html>
