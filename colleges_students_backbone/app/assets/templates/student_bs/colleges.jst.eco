@@ -1,0 +1,13 @@
+<h1>College Records</h1>
+<center>
+	<table border='1' align="center">
+		<th> Name </th>
+	  	<th> Established </th>
+		<% for college in @colleges.models: %>
+		  <tr>
+		  	<td><%= college.get('name') %></td>
+		  	<td><%= college.get('establish') %></td>
+		  </tr>
+		<% end %>
+	</table><br><br>
+<center>

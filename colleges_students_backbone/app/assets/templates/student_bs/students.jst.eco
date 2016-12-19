@@ -1,0 +1,21 @@
+<h1 id="hey">Student Records</h1>
+<center>
+	<table border='1' align="center">
+		<th> Reg.ID </th>
+	  	<th> Department </th>
+	  	<th> Maths </th>
+	  	<th> Physics </th>
+	  	<th> Chemistry </th>
+	  	<th> Year </th>
+		<% for student in @students.models: %>
+		  <tr>
+		  	<td><%= student.get('regid') %></td>
+		  	<td><%= student.get('dept') %></td>
+		  	<td><%= student.get('maths') %></td>
+		  	<td><%= student.get('physics') %></td>
+		  	<td><%= student.get('chemistry') %></td>
+		  	<td><%= student.get('year') %></td>
+		  </tr>
+		<% end %>
+	</table><br><br>
+<center>

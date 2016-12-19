@@ -1,0 +1,1 @@
+class CollegesStudentsReact.Routers.CollegeBs extends Backbone.Router
