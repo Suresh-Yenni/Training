@@ -35,7 +35,7 @@
 <h1 align="center" style="color: #0099ff;"><%= t("college_students") %></h1>
 <body bgcolor="#f1f1f1">
   <div class="block">
-     <% if !@student.empty? %><br><br>
+     <% unless @student.empty? %><br><br>
        <table border="1">
             <tr>
                <th>Student Reg.ID</th>

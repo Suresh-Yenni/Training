@@ -38,7 +38,7 @@
   </head>
   <body bgcolor="#f1f1f1">
     <div class="block">
-      <% if !@students.blank? %><br><br>
+      <% unless @students.blank? %><br><br>
         <table border="1">
           <tr>
             <th>Reg.ID</th>
@@ -51,17 +51,17 @@
             <th>Edit Link</th>
             <th>Delete Link</th>
           </tr>
-          <% @details.each do |stu, clg| %>
+          <% @students.each do |student| %>
            <tr>
-             <td><%= stu.regid %></td>
-             <td><%= stu.dept %></td>
-             <td><%= stu.maths %></td>
-             <td><%= stu.physics %></td>
-             <td><%= stu.chemistry %></td>
-             <td><%= stu.year %></td>
-             <th><%= clg %></td>
-             <td><%= link_to 'Edit Student', edit_student_path(stu.id), {:class=>"jump"} %></td>
-             <td><%= link_to 'Delete Student', student_path(stu.id), method: "delete", class: "jump"%></td>
+             <td><%= student.regid %></td>
+             <td><%= student.dept %></td>
+             <td><%= student.maths %></td>
+             <td><%= student.physics %></td>
+             <td><%= student.chemistry %></td>
+             <td><%= student.year %></td>
+             <th><%= student.college.name %></td>
+             <td><%= link_to 'Edit Student', edit_student_path(student.id), {:class=>"jump"} %></td>
+             <td><%= link_to 'Delete Student', student_path(student.id), method: "delete", class: "jump"%></td>
            </tr>
           <% end %>
         </table>

@@ -38,7 +38,7 @@
   </head>
   <body bgcolor="#f1f1f1">
     <div class="block">
-      <% if !@customers.empty? %><br><br>
+      <% unless @customers.empty? %><br><br>
         <table border="1">
           <% @customers.each do |item| %>
            <tr>

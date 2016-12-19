@@ -4,4 +4,6 @@ class Item < ApplicationRecord
   validates :price, presence: true, numericality: true
   has_many :orders, dependent: :destroy
 
+  scope :item_on_id, -> (id)  { Item.find(id)}
+
 end

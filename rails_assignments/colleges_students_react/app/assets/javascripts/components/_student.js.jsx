@@ -9,7 +9,6 @@ var Students = React.createClass({
         index: -1,
         group_on : ""
       };
-      
   },
   handleFilter(){
 

@@ -23,9 +23,6 @@ class StudentsController < ApplicationController
 
 	def index
 		@students = Student.all
-		colleges = []
-		@students.each { |student| colleges.push(student.college.name) }
-		@details = @students.zip(colleges)
 	end
 
 	def new
@@ -34,10 +31,8 @@ class StudentsController < ApplicationController
 
 	def create
 		student = Student.new(params.require(:student).permit!)
-		student.save	
-		col_name = College.select('name').find(params[:student][:college_id])
-		col_name = col_name.name[0...2]
-		student.update_attribute :extended_sid, "#{student.id}_#{col_name}"
+		student.save
+		student.update_attribute :extended_sid, "#{student.id}_#{student.college.name[0...2]}"
 		redirect_to students_path
 	end
 

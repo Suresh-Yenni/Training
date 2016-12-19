@@ -4,19 +4,15 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @details = []
-    Order.all.each { |odr| @details.push([odr.customer.name, odr.item.item_name]) }
+    @orders = Order.includes(:customer, :item)
   end
 
   def new
     @orders = Order.new
-    @customers = Customer.all
-    @items = Item.all
   end
 
   def create
-    orders = Order.new(params.require(:orders).permit!)
-    orders.save
+    Order.new(params.require(:orders).permit!).save
     redirect_to orders_home_path
   end
 

@@ -35,14 +35,14 @@
 <h1 align="center" style="color: #0099ff;">Showing Customer Orders</h1>
 <body bgcolor="#f1f1f1">
   <div class="block">
-     <% if !@details.empty? %><br><br>
+     <% unless @customer_orders.empty? %><br><br>
        <table border="1">
-            <% @details.each do |ord, item| %>
+            <% @customer_orders.each do |order| %>
               <tr>
-                <td><%= ord.date %></td>
-                <td><%= item.item_name %></td>
-                <td><%= item.price %></td>
-                <td><%= link_to "Delete Order", order_path(ord.id), method: "delete", class: "jump"%></td>
+                <td><%= order.date %></td>
+                <td><%= order.item.item_name %></td>
+                <td><%= order.item.price %></td>
+                <td><%= link_to "Delete Order", order_path(order.id), method: "delete", class: "jump"%></td>
               </tr>
             <% end %>
       </table>

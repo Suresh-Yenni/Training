@@ -29,12 +29,12 @@
   </head>
   <body bgcolor="#f1f1f1">
     <div class="block"><br><br>
-      <% if !@details.empty? %>
+      <% unless @orders.empty? %>
         <table border='1'>
-          <% @details.each do |cust,itm| %>
+          <% @orders.each do |order| %>
             <tr>
-               <td><%= cust %></td>
-               <td><%= itm %></td>
+               <td><%= order.customer.name %></td>
+               <td><%= order.item.item_name %></td>
             </tr>
           <% end %>
         </table>

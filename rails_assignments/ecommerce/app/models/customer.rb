@@ -5,4 +5,6 @@ class Customer < ApplicationRecord
   validates :pincode, presence: true, numericality: { only_integer: true}, format: { with: /\A[+-]?\d+\z/ }
   has_many :orders, dependent: :destroy
 
+  scope :cutomer_on_id, -> (id)  { Customer.find(id)}
+
 end

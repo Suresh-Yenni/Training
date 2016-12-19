@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
 
   def index
-    @customers = Customer.all
+    @customers = Customer.select('id, name, email, city, pincode').all
   end
 
   def new
@@ -9,33 +9,25 @@ class CustomersController < ApplicationController
   end
 
   def show
-  	customer = Customer.find(params[:id])
-  	customer_orders = customer.orders
-    items = []
-    customer_orders.each { |order| items.push(order.item) }
-    
-    @details = customer_orders.zip(items)
+  	@customer_orders = Customer.cutomer_on_id(params[:id]).orders
   end
 
   def create
-    customers = Customer.new(params.require(:customers).permit!)
-    customers.save
+    Customer.new(params.require(:customers).permit!).save
     redirect_to customers_path
   end
 
   def edit
-    @customers = Customer.find(params[:id])
+    @customers = Customer.cutomer_on_id(params[:id])
   end
 
   def update
-    @customers = Customer.find(params[:id])
-    @customers.update_attributes(params.require(:customers).permit!)
+    Customer.cutomer_on_id(params[:id]).update_attributes(params.require(:customers).permit!)
     redirect_to customers_path
   end
 
   def destroy
-    customers = Customer.find(params[:id])
-    customers.destroy
+    Customer.cutomer_on_id(params[:id]).destroy
     redirect_to customers_path
   end
 

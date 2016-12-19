@@ -3,6 +3,8 @@ class Student < ApplicationRecord
     validates :maths, :physics, :chemistry, :college_id, :regid, :year, presence: true, numericality: { only_integer: true}
     validates :dept, presence: true
 
+    scope :student_on_id, -> (id) { Student.find(id) }
+
     ## this method computes the change in marks for two provided year and
     ## also computes the total of rows of each group
     def self.compute_change_and_total!(marks_change, total_marks, student, year1, year2, total)
@@ -14,7 +16,7 @@ class Student < ApplicationRecord
                 total_row["maths"] += stu['maths']
                 total_row["physics"] += stu['physics']
                 total_row["chemistry"] += stu['chemistry']
-                if !year1.nil? && !year2.nil?
+                unless year1.nil? || year2.nil?
                     if stu['year'] == year1
                         math1 = stu['maths']
                         phy1 = stu['physics']
@@ -26,7 +28,7 @@ class Student < ApplicationRecord
                     end
                 end
             end
-            if !year1.nil? && !year2.nil?
+            unless year1.nil? || year2.nil?
                 change_row["maths"] = math1 - math2
                 change_row["physics"] = phy1 - phy2
                 change_row["chemistry"] = chem1 - chem2

@@ -1,15 +1,14 @@
 class CollegesController < ApplicationController
 
-	def home; 
+	def home;
 	end
 
 	def search
-		str = params[:college][:name]
-		@college = College.where('name like ?', "%#{str}%")
+		@college = College.select('id, name, establish').where('name like ?', "%#{params[:college][:name]}%")
 	end
 
 	def index
-		@college = College.all
+		@college = College.select('id, name, establish').all
 	end
 
 	def show
@@ -21,24 +20,21 @@ class CollegesController < ApplicationController
 	end
 
 	def create
-		@college = College.new(params.require(:college).permit!)
-		@college.save
+		College.new(params.require(:college).permit!).save
 		redirect_to colleges_path
 	end
 
 	def edit
-		@college = College.find(params[:id])
+		@college = College.college_on_id(params[:id])
 	end
 
 	def update
-		@college = College.find(params[:id])
-		@college.update_attributes(params.require(:college).permit!)
+		College.college_on_id(params[:id]).update_attributes(params.require(:college).permit!)
 		redirect_to colleges_path
 	end
 
 	def destroy
-		college = College.find(params[:id])
-		college.destroy
+		College.college_on_id(params[:id]).destroy
 		redirect_to colleges_path
 	end
 

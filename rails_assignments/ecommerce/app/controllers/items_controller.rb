@@ -9,24 +9,21 @@ class ItemsController < ApplicationController
   end
 
   def create
-    items = Item.new(params.require(:items).permit!)
-    items.save
+    Item.new(params.require(:items).permit!).save
     redirect_to items_path
   end
 
   def edit
-    @items = Item.find(params[:id])
+    @items = Item.item_on_id(params[:id])
   end
 
   def update
-    items = Item.find(params[:id])
-    items.update_attributes(params.require(:items).permit!)
+    Item.item_on_id(params[:id]).update_attributes(params.require(:items).permit!)
     redirect_to items_path
   end
 
   def destroy
-    items = Item.find(params[:id])
-    items.destroy
+    Item.item_on_id(params[:id]).destroy
     redirect_to items_path
   end
 
