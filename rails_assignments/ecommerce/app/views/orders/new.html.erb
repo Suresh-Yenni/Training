@@ -25,8 +25,8 @@
   <div class="block"><br><br>
     <%= form_for :orders, url: orders_path do |f|%>
        <p>
-         <%= f.collection_select(:customer_id, Customer.all, :id, :name) %><br><br>
-         <%= f.collection_select(:item_id, Item.all, :id, :item_name) %><br><br>
+         <%= f.collection_select(:customer_id, Customer.select('id, name').all, :id, :name) %><br><br>
+         <%= f.collection_select(:item_id, Item.select('id, item_name').all, :id, :item_name) %><br><br>
           <input type=date id=orders_date name=orders[date] /><br><br>
          <%= f.submit "Make Order", class: "press" %>
        </p>

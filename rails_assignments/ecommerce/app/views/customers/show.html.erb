@@ -35,7 +35,7 @@
 <h1 align="center" style="color: #0099ff;">Showing Customer Orders</h1>
 <body bgcolor="#f1f1f1">
   <div class="block">
-     <% unless @customer_orders.empty? %><br><br>
+     <% unless @customer_orders.blank? %><br><br>
        <table border="1">
             <% @customer_orders.each do |order| %>
               <tr>

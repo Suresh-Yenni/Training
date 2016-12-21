@@ -29,7 +29,7 @@
   </head>
   <body bgcolor="#f1f1f1">
     <div class="block"><br><br>
-      <% unless @orders.empty? %>
+      <% unless @orders.blank? %>
         <table border='1'>
           <% @orders.each do |customer_name, item_name| %>
             <tr>
