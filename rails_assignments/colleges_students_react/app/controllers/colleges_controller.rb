@@ -25,7 +25,7 @@ class CollegesController < ApplicationController
 	end
 
 	def edit
-		@college = College.college_on_id(params[:id])
+		@college = College.find_by_id(params[:id])
 	end
 
 	def update

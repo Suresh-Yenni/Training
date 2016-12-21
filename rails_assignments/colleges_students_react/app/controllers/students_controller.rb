@@ -10,8 +10,8 @@ class StudentsController < ApplicationController
 		@marks_change = {}
 		@total_marks = {}
 
-		year1 = !params[:year1].empty? ? Integer(params[:year1]) : nil
-		year2 = !params[:year2].empty? ? Integer(params[:year2]) : nil
+		year1 = !params[:year1].empty? ? params[:year1].to_i : nil
+		year2 = !params[:year2].empty? ? params[:year2].to_i : nil
 		total = params[:total]
 
 		@total_marks, @marks_change = Student.compute_change_and_total!(@marks_change, @total_marks, @students, year1, year2, total)

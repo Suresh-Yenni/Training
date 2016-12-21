@@ -31,10 +31,10 @@
     <div class="block"><br><br>
       <% unless @orders.empty? %>
         <table border='1'>
-          <% @orders.each do |order| %>
+          <% @orders.each do |customer_name, item_name| %>
             <tr>
-               <td><%= order.customer.name %></td>
-               <td><%= order.item.item_name %></td>
+               <td><%= customer_name %></td>
+               <td><%= item_name %></td>
             </tr>
           <% end %>
         </table>

@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.includes(:customer, :item)
+    @orders = Order.includes(:customer, :item).pluck(:name, :item_name)
   end
 
   def new
