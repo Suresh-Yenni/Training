@@ -1,0 +1,88 @@
+Docker installation:
+
+$ sudo apt-get update
+$ sudo apt-get install apt-transport-https ca-certificates
+$ sudo apt-key adv \
+               --keyserver hkp://ha.pool.sks-keyservers.net:80 \
+               --recv-keys 58118E89F3A912897C070ADBF76221572C52609D        (for finding http url for below command)
+$ echo "https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+$ sudo apt-get update
+$ apt-cache policy docker-engine        (for verification if the above steps went correctly)
+
+$ sudo apt-get update
+$ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+$ sudo apt-get install docker-engine
+$ sudo service docker start
+$ sudo docker run hello-world            (Docker inbuilt hello-world program runs indicating docker got installed correctlt)
+
+
+Docker-composer installation:
+
+$ curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose
+$ docker-compose --version                (verifying docker-composer installation)
+
+Running existing rails application on docker: ( I using Rails assignment ecommerce application here )
+
+step1: created a 'Dockerfile' inside project with content
+
+            FROM ruby:2.3.3
+            RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+            WORKDIR .
+            COPY Gemfile* ./
+            RUN bundle install
+            COPY . .
+
+            CMD bundle exec [ "config/containers/app_cmd.sh" ]
+
+step2: created a file inside project 'docker-compose.yml' with content
+
+            version: '2'
+            services:
+              db:
+                image: postgres
+              web:
+                build: .
+                command: bundle exec rails s -p 3000 -b '0.0.0.0'
+                volumes:
+                  - .:/ecommerce
+                ports:
+                  - "3000:3000"
+                depends_on:
+                  - db
+
+step3: Since I using Linux, ran this command
+
+  sudo chown -R $USER:$USER .
+
+step4: ran command
+
+  docker-compose build
+
+step5: Inside project replaced the contents of config/database.yml with belowe content
+
+                development: &default
+                adapter: postgresql
+                encoding: unicode
+                database: ecommerce_development
+                pool: 5
+                username: postgres
+                password:
+                host: db
+
+                test:
+                <<: *default
+                database: ecommerce_test
+
+step6: Ran command
+
+  docker-compose up
+
+step7: Ran commands
+
+  docker-compose run web rails db:create
+  docker-compose run web rails db:migrate
+
+step8: In web browser go for localhost url with portnumber on which docker running ( docker-compose up command runs the docker)
+
+  ecommerce website was loaded.
