@@ -141,4 +141,4 @@ example: $docker search ecommerce
 
 $ docker pull 8686974659/ecommerce_web
 
-   (Will get repository to our local images)
+   (Will get image to our local images)
