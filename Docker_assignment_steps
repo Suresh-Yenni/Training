@@ -86,3 +86,59 @@ step7: Ran commands
 step8: In web browser go for localhost url with portnumber on which docker running ( docker-compose up command runs the docker)
 
   ecommerce website was loaded.
+
+
+Pushing ecommerce project image on Dockerhub and running application through DockerHub image:
+
+(Created DockerHub account with id "8686974659")
+
+$ docker images
+
+      REPOSITORY                                       TAG                 IMAGE ID            CREATED             SIZE
+      ecommerce_web                                    latest              9965186e770f        4 days ago          866.1 MB
+
+  (here remember repository name, tag name and image id to use below command)
+
+(Created "ecommerce_web" repository in DockerHub account)
+
+$ docker tag 9965186e770f 8686974659/ecommerce_web:latest
+
+$ docker images
+
+    REPOSITORY                                       TAG                 IMAGE ID            CREATED             SIZE
+    ecommerce_web                                    latest              9965186e770f        4 days ago          866.1 MB
+    8686974659/ecommerce_web                         latest              9965186e770f        4 days ago          866.1 MB
+
+$ docker login
+
+    (submited login details)
+
+$ docker push 8686974659/ecommerce_web:latest
+
+Now opend my docker-compose.yml file
+
+     replaced "build ." for web service with "image: docker.io/8686974659/ecommerce_web:latest"
+
+   (We can do "$ docker pull 8686974659/ecommerce_web:latest" to get image from our DockerHub to our local images
+    and in docker-compose.yml file keep web service image as "image: 8686974659/ecommerce_web")
+
+$ docker-compose up
+
+In web browser go for localhost url with portnumber on which docker running ( docker-compose up command runs the docker)
+
+  ecommerce website was loaded.
+
+
+
+Sharing/getting images to/from other:
+
+$ docker search <image_name>
+
+example: $docker search ecommerce
+
+        NAME                       DESCRIPTION   STARS     OFFICIAL   AUTOMATED
+        8686974659/ecommerce_web   Assignment    0
+
+$ docker pull 8686974659/ecommerce_web
+
+   (Will get repository to our local images)
